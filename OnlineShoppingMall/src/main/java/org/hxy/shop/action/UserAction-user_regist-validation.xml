@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+        "-//OpenSymphony Group//XWork Validator 1.0.3//EN"
+        "http://www.opensymphony.com/xwork/xwork-validator-1.0.3.dtd">
+<validators>
+    <!--检验用户名-->
+    <field name="username">
+        <field-validator type="requiredstring">
+            <message>用户名不能为空!</message>
+        </field-validator>
+    </field>
+    <!--校验密码-->
+    <field name="password">
+        <field-validator type="requiredstring">
+            <message>密码不能为空!</message>
+        </field-validator>
+    </field>
+    <!--校验邮箱-->
+    <field name="email">
+        <field-validator type="requiredstring">
+            <message>邮箱不能为空!</message>
+        </field-validator>
+    </field>
+    <field name="email">
+        <field-validator type="email">
+            <message>邮箱格式不正确!</message>
+        </field-validator>
+    </field>
+    <!--校验名字-->
+    <field name="name">
+        <field-validator type="requiredstring">
+            <message>姓名不能为空！</message>
+        </field-validator>
+    </field>
+    <!--校验电话-->
+    <field name="phone">
+        <field-validator type="requiredstring">
+            <message>电话不能为空！</message>
+        </field-validator>
+    </field>
+    <field name="phone">
+        <field-validator type="stringlength">
+            <param name="minLength">11</param>
+            <param name="maxLength">11</param>
+            <message>请输入11位手机号！</message>
+        </field-validator>
+    </field>
+    <!--校验地址-->
+    <field name="addr">
+        <field-validator type="requiredstring">
+            <message>地址不能为空！</message>
+        </field-validator>
+    </field>
+</validators>

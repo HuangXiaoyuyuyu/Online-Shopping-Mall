@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+     <package name="shop" namespace="/" extends="struts-default">
+         <interceptors>
+             <interceptor name="PrivilegeInterceptor" class="org.hxy.shop.interceptor.PrivilegeInterceptor" />
+         </interceptors>
+
+         <global-results>
+             <result name="msg">/WEB-INF/jsp/msg.jsp</result>
+             <result name="login">/WEB-INF/jsp/login.jsp</result>
+             <result name="loginFail">/admin/index.jsp</result>
+         </global-results>
+
+         <!--首页-->
+         <action name="index" class="org.hxy.shop.action.IndexAction">
+             <result name="index">/WEB-INF/jsp/index.jsp</result>
+         </action>
+
+         <!--用户模块Action-->
+         <action name="user_*" class="org.hxy.shop.action.UserAction" method="{1}">
+             <result name="registPage">/WEB-INF/jsp/regist.jsp</result>
+             <result name="input">/WEB-INF/jsp/{1}.jsp</result>
+             <result name="loginPage">/WEB-INF/jsp/login.jsp</result>
+             <result name="loginSuccess" type="redirectAction">index</result>
+             <result name="login">/WEB-INF/jsp/{1}.jsp</result>
+             <result name="logout" type="redirectAction">index</result>
+             <result name="checkcodeFailWhenRegist">/WEB-INF/jsp/{1}.jsp</result>
+             <result name="checkcodeFailWhenLogin">/WEB-INF/jsp/{1}.jsp</result>
+         </action>
+
+         <!--验证码-->
+         <action name="checkImg" class="org.hxy.shop.action.CheckImgAction" />
+
+         <!--Product模块-->
+         <action name="product_*" class="org.hxy.shop.action.ProductAction" method="{1}">
+             <result name="findByPid">/WEB-INF/jsp/product.jsp</result>
+             <result name="findByCid">/WEB-INF/jsp/productListCid.jsp</result>
+             <result name="findByCsid">/WEB-INF/jsp/productListCsid.jsp</result>
+         </action>
+
+         <!--Cart模块-->
+         <action name="cart_*" class="org.hxy.shop.action.CartAction" method="{1}">
+             <result name="addCart">/WEB-INF/jsp/cart.jsp</result>
+             <result name="clearCart">/WEB-INF/jsp/cart.jsp</result>
+             <result name="removeCart">/WEB-INF/jsp/cart.jsp</result>
+             <result name="myCart">/WEB-INF/jsp/cart.jsp</result>
+         </action>
+
+         <!--Order模块-->
+         <action name="order_*" class="org.hxy.shop.action.OrderAction" method="{1}">
+             <result name="saveSuccess">/WEB-INF/jsp/order.jsp</result>
+             <result name="findByUid">/WEB-INF/jsp/orderList.jsp</result>
+             <result name="findByOid">/WEB-INF/jsp/order.jsp</result>
+             <result name="updateStateSuccess" type="redirectAction">order_findByUid.action?page=1</result>
+         </action>
+
+         <!--AdminUser模块-->
+         <action name="adminUser_*" class="org.hxy.shop.action.AdminUserAction" method="{1}">
+             <result name="loginFail">/admin/index.jsp</result>
+             <result name="loginSuccess" type="redirect">/admin/home.jsp</result>
+         </action>
+
+         <!--后台一级分类管理的Action-->
+         <action name="adminCategory_*" class="org.hxy.shop.action.AdminCategoryAction" method="{1}">
+            <result name="findAll">/admin/category/list.jsp</result>
+            <result name="saveSuccess" type="redirectAction">adminCategory_findAll.action</result>
+            <result name="deleteSuccess" type="redirectAction">adminCategory_findAll.action</result>
+            <result name="editSuccess">/admin/category/edit.jsp</result>
+            <result name="updateSuccess" type="redirectAction">adminCategory_findAll.action</result>
+             
+             <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+             <interceptor-ref name="defaultStack"></interceptor-ref>
+         </action>
+
+         <!--后台二级分类管理的Action-->
+         <action name="adminCategorySecond_*" class="org.hxy.shop.action.AdminCategorySecondAction" method="{1}">
+             <result name="findAll">/admin/categorySecond/list.jsp</result>
+             <result name="addPageSuccess">/admin/categorySecond/add.jsp</result>
+             <result name="saveSuccess" type="redirectAction">adminCategorySecond_findAllByPage.action?page=1</result>
+             <result name="deleteSuccess" type="redirectAction">adminCategorySecond_findAllByPage.action?page=1</result>
+             <result name="editSuccess">/admin/categorySecond/edit.jsp</result>
+             <result name="updateSuccess" type="redirectAction">adminCategorySecond_findAllByPage.action?page=1</result>
+
+             <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+             <interceptor-ref name="defaultStack"></interceptor-ref>
+         </action>
+
+         <!--后台Product管理的Action-->
+         <action name="adminProduct_*" class="org.hxy.shop.action.AdminProductAction" method="{1}">
+             <result name="findAll">/admin/product/list.jsp</result>
+             <result name="addPageSuccess">/admin/product/add.jsp</result>
+             <result name="saveSuccess" type="redirectAction">adminProduct_findAllByPage?page=1</result>
+             <result name="deleteSuccess" type="redirectAction">adminProduct_findAllByPage?page=1</result>
+             <result name="editSuccess">admin/product/edit.jsp</result>
+             <result name="updateSuccess" type="redirectAction">adminProduct_findAllByPage?page=1</result>
+
+             <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+             <interceptor-ref name="defaultStack"></interceptor-ref>
+         </action>
+
+         <!--后台Order管理的Action-->
+         <action name="adminOrder_*" class="org.hxy.shop.action.AdminOrderAction" method="{1}">
+             <result name="findAll">/admin/order/list.jsp</result>
+             <result name="findOrderItem">/admin/order/orderItem.jsp</result>
+             <result name="updateStateSuccess" type="redirectAction">adminOrder_findAllByPage.action?page=1</result>
+
+             <interceptor-ref name="PrivilegeInterceptor"></interceptor-ref>
+             <interceptor-ref name="defaultStack"></interceptor-ref>
+         </action>
+
+         <!-- 后台用户管理Action -->
+         <action name="userAdmin_*" class="org.hxy.shop.action.UserAdminAction" method="{1}">
+             <result name="findAll">/admin/user/list.jsp</result>
+             <result name="deleteSuccess" type="redirectAction">userAdmin_findAllByPage.action?page=1</result>
+             <result name="editSuccess">/admin/user/edit.jsp</result>
+             <result name="updateSuccess" type="redirectAction">userAdmin_findAllByPage.action?page=1</result>
+
+             <interceptor-ref name="PrivilegeInterceptor"/>
+             <interceptor-ref name="defaultStack"/>
+         </action>
+     </package>
+</struts>
